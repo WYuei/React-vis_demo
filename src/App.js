@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import Chart from './Chart'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const API_URL = "https://nataliia-radina.github.io/react-vis-example/";
+
+class App extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            results: [],
+        };
+    }
+
+    componentDidMount() {
+        fetch(API_URL)
+            .then(response => {
+                if (response.ok) {
+                    return  response.json()
+                }
+                else {
+                    throw new Error ('something went wrong')
+                }
+            })
+            .then(response => this.setState({
+                    results: response.results.filter((r)=>{
+                        return r.name === 'JavaScript';
+                    })
+                })
+            )}
+
+    render() {
+        const {results} = this.state;
+
+        return (
+            <div className="App">
+                <Chart data={results}/>
+            </div>
+        );
+    }
 }
 
 export default App;
