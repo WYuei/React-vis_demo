@@ -1,5 +1,5 @@
 import React from 'react';
-import {XYPlot, XAxis, YAxis, VerticalGridLines, HorizontalGridLines, LineSeries} from 'react-vis';
+import {XYPlot, XAxis, YAxis, VerticalGridLines, HorizontalGridLines, MarkSeries,LineSeries} from 'react-vis';
 
 const Chart = (props) => {
 
@@ -7,8 +7,10 @@ const Chart = (props) => {
         return {x: d.year + '/' + d.quarter,
             y: parseFloat(d.count/1000)}
     });
-
+    console.log('chart',dataArr)
     return (
+
+        <div>
         <XYPlot
             xType="ordinal"
             width={1000}
@@ -17,10 +19,13 @@ const Chart = (props) => {
             <HorizontalGridLines />
             <XAxis title="Period of time(year and quarter)" />
             <YAxis title="Number of pull requests (thousands)" />
-            <LineSeries
+            <MarkSeries
                 data={dataArr}
-                style={{stroke: 'violet', strokeWidth: 3}}/>
+                /// all the points are red
+                style={{fill: "red"}}
+            />
         </XYPlot>
+        </div>
     );
 }
 

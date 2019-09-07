@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Chart from './Chart'
+import HighlightChart from './HighlightChart'
 
 const API_URL = "https://nataliia-radina.github.io/react-vis-example/";
 
@@ -34,6 +35,7 @@ class App extends Component {
         return (
             <div className="App">
                 <Chart data={results}/>
+                <HighlightChart data={results}/>
             </div>
         );
     }
