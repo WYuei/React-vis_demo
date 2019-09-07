@@ -14,28 +14,26 @@ export default class HighlightChart extends Component{
     constructor(props)
     {
         super(props)
-    }
-    data = Array.from(this.props.data)
 
-    dataArr = this.data.map((d)=> {
-        return {x: d.year + '/' + d.quarter,
-            y: parseFloat(d.count/1000)}
-    })
+    }
     state = {
         lastDrawLocation: null,
-        series: [
-            {
-                data:this.dataArr,
-                disabled: false,
-                title: 'Apples'
-            }
-        ]
+        data:this.props.data.map((d)=> {
+            return {x: d.year + '/' + d.quarter,
+                y: parseFloat(d.count/1000)}
+        })
     };
     render(){
-        const {series, lastDrawLocation} = this.state;
+        const {data,lastDrawLocation} = this.state;
 
-        console.log('data',this.data)
+        console.log('stateData',data)
         console.log('props',this.props.data)
+
+        const dataArr=this.props.data.map((d)=> {
+            return {x: d.year + '/' + d.quarter,
+                y: parseFloat(d.count/1000)}
+        })
+        console.log('dataArr',dataArr)
         return (
             <div>
                 <div>
@@ -60,11 +58,7 @@ export default class HighlightChart extends Component{
 
                         <YAxis />
                         <XAxis />
-
-                        {series.map(entry => (
-                            <LineSeries key={entry.title} data={entry.data} />
-                        ))}
-
+                        <LineSeries data={dataArr} />
                         <Highlight
                             onBrushEnd={area => this.setState({lastDrawLocation: area})}
                             onDrag={area => {
