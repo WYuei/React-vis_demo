@@ -11,29 +11,23 @@ import PropTypes from 'prop-types'
 
 
 export default class HighlightChart extends Component{
+
     constructor(props)
     {
         super(props)
-
+        this.state={lastDrawLocation:null}
     }
-    state = {
-        lastDrawLocation: null,
-        data:this.props.data.map((d)=> {
-            return {x: d.year + '/' + d.quarter,
+
+    render(){
+        const {lastDrawLocation} = this.state;
+        let dataArr=this.props.data
+        let data=dataArr.map((d)=> {
+            return {x: d.year,
                 y: parseFloat(d.count/1000)}
         })
-    };
-    render(){
-        const {data,lastDrawLocation} = this.state;
-
         console.log('stateData',data)
         console.log('props',this.props.data)
 
-        const dataArr=this.props.data.map((d)=> {
-            return {x: d.year + '/' + d.quarter,
-                y: parseFloat(d.count/1000)}
-        })
-        console.log('dataArr',dataArr)
         return (
             <div>
                 <div>
@@ -58,7 +52,7 @@ export default class HighlightChart extends Component{
 
                         <YAxis />
                         <XAxis />
-                        <LineSeries data={dataArr} />
+                        <LineSeries data={data} />
                         <Highlight
                             onBrushEnd={area => this.setState({lastDrawLocation: area})}
                             onDrag={area => {
